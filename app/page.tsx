@@ -1,12 +1,18 @@
 'use client'
-import Image from "next/image";
-import Centro from './centro';
 import Link from "next/link";
+
 
 import React, { useState } from 'react';
 export default function Home() {
   const contractText = "$ CONTRAKT: 36kkUBZZu7KAjctrf7Vk3LA4SqrER1NNWQp1eJ7QcE4X";
   const [copySuccess, setCopySuccess] = useState(false);
+
+  const handleDownloadImage = (imageUrl: string, imageName: string) => {
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = imageName;
+    link.click();
+  };
 
   const handleCopyToClipboard = async () => {
     try {
@@ -37,7 +43,6 @@ export default function Home() {
 
       </header>
 
-      {/* <Centro></Centro> */}
 
       <main className="flex-1 container mx-auto my-8 text-center">
         <div className="flex flex-col gap-2 bg-slate-50 bg-opacity-90 justify-center items-center">
@@ -46,12 +51,12 @@ export default function Home() {
 
             U kant giv SH3T L3FTARDS 1 inch!
             Far laft-weng, shiver!! fraedom advances!! LANG LIVE LOBERTY, DAMNIT!!!</p>
-        <button className="text-black text-4xl pt-2 border-none" onClick={handleCopyToClipboard}>{contractText}</button>
-        {copySuccess && <p className="text-black">Copied to clipboard!</p>}
+          <button className="text-black text-4xl pt-2 border-none" onClick={handleCopyToClipboard}>{contractText}</button>
+          {copySuccess && <p className="text-black">Copied to clipboard!</p>}
           <img className="p-10" src="/inflation.png" width="60%"></img>
 
         </div>
-      
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-slate-50 bg-opacity-90">
 
 
@@ -60,6 +65,9 @@ export default function Home() {
             <div key={index} className="bg-white p-4 shadow-md rounded-md">
               <img src={item.image} alt={`Milei ${index + 1}`} className="mb-4 rounded-md" />
               <p className="text-black">{item.quote}</p>
+              <button onClick={() => handleDownloadImage(item.image, `Milei_${index + 1}`)}>
+              ⬇️ Download
+              </button>
             </div>
           ))}
         </div>
